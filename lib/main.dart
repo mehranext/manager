@@ -10,10 +10,11 @@ class Manage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp( 
+    return MaterialApp(
+      theme: ThemeData(fontFamily: 'Iranian Sans'),
       debugShowCheckedModeBanner: false,
       title: 'ManageApp',
-      home: MainScreen(),
+      home: const MainScreen(),
     );
   }
 }

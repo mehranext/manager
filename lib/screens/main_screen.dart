@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:manager/screens/home_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -9,7 +10,9 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int CurrentIndex = 0;
+  //!variables
+  int currentIndex = 0;
+  Widget body = const HomeScreen();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,16 +20,25 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: AnimatedBottomNavigationBar(
         inactiveColor: Colors.black54,
         icons: const [Icons.home, Icons.info],
-        activeIndex: CurrentIndex,
+        activeIndex: currentIndex,
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.verySmoothEdge,
         leftCornerRadius: 32,
         rightCornerRadius: 32,
         onTap: (index) {
+          if (index == 0) {
+            body = HomeScreen();
+          } else {
+            body = const Center(
+              child: Text('Info'),
+            );
+          }
+
           setState(() {});
-          CurrentIndex = index;
+          currentIndex = index;
         },
       ),
+      body: body,
     );
   }
 }
