@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manager/screens/main_screen.dart';
 
 void main() {
   runApp(const Manage());
@@ -9,10 +10,10 @@ class Manage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( 
+    return const MaterialApp( 
       debugShowCheckedModeBanner: false,
       title: 'ManageApp',
-      home: Container(),
+      home: MainScreen(),
     );
   }
 }
