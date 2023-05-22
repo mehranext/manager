@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:manager/models/constant.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 
@@ -55,16 +56,41 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         width: 15,
                       ),
-                      Text(
+                      const Text(
                         ' : تراکنش ها',
                         style: TextStyle(fontSize: 28),
                       ),
                     ],
                   ),
                 ),
+                Expanded(child: Picwidget()),
               ],
             ),
           )),
+    );
+  }
+}
+
+//!center picture codes
+class Picwidget extends StatelessWidget {
+  const Picwidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Spacer(),
+        SvgPicture.asset(
+          'assets/images/pages-paper-stacked-640.svg',
+          height: 200,
+          width: 200,
+        ),
+     const   SizedBox(
+          height: 10,
+        ),
+    const    Text(':)تراکنشی یوخدی که'),
+        const Spacer(),
+      ],
     );
   }
 }
