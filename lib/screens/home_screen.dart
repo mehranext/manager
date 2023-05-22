@@ -17,56 +17,82 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
           backgroundColor: Colors.white,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: kPurpleColor,
-            elevation: 0,
-            child: Icon(Icons.add),
-          ),
+          floatingActionButton: const MyfloatingButton(),
           body: SizedBox(
             width: double.infinity,
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 20, top: 20, left: 5),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: SearchBarAnimation(
-                          hintText: '...جست و جو کنید',
-                          textEditingController: searchController,
-                          isOriginalAnimation: false,
-                          buttonColour: kPurpleColor,
-                          buttonElevation: 0,
-                          buttonBorderColour: Colors.black54,
-                          trailingWidget: const Icon(
-                            Icons.search,
-                            size: 25,
-                          ),
-                          buttonWidget: const Icon(
-                            Icons.search,
-                            size: 25,
-                          ),
-                          secondaryButtonWidget: const Icon(
-                            Icons.search,
-                          ),
-                          onFieldSubmitted: (String text) {},
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      const Text(
-                        ' : تراکنش ها',
-                        style: TextStyle(fontSize: 28),
-                      ),
-                    ],
-                  ),
-                ),
+                headerwidget(searchController: searchController),
                 Expanded(child: Picwidget()),
               ],
             ),
           )),
+    );
+  }
+}
+//!floatingbutton
+class MyfloatingButton extends StatelessWidget {
+  const MyfloatingButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {},
+      backgroundColor: kPurpleColor,
+      elevation: 0,
+      child: Icon(Icons.add),
+    );
+  }
+}
+
+//!headerwidgets
+class headerwidget extends StatelessWidget {
+  const headerwidget({
+    super.key,
+    required this.searchController,
+  });
+
+  final TextEditingController searchController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20, top: 20, left: 5),
+      child: Row(
+        children: [
+          Expanded(
+            child: SearchBarAnimation(
+              hintText: '...جست و جو کنید',
+              textEditingController: searchController,
+              isOriginalAnimation: false,
+              buttonColour: kPurpleColor,
+              buttonElevation: 0,
+              buttonBorderColour: Colors.black54,
+              trailingWidget: const Icon(
+                Icons.search,
+                size: 25,
+              ),
+              buttonWidget: const Icon(
+                Icons.search,
+                size: 25,
+              ),
+              secondaryButtonWidget: const Icon(
+                Icons.search,
+              ),
+              onFieldSubmitted: (String text) {},
+            ),
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          const Text(
+            ' : تراکنش ها',
+            style: TextStyle(fontSize: 28),
+          ),
+        ],
+      ),
     );
   }
 }
