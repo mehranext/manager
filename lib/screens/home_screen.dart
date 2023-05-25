@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:manager/models/constant.dart';
+import 'package:manager/screens/new_transaction_sreen.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,13 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 headerwidget(searchController: searchController),
-                Expanded(child: Picwidget()),
+                const Expanded(child: Picwidget()),
               ],
             ),
           )),
     );
   }
 }
+
 //!floatingbutton
 class MyfloatingButton extends StatelessWidget {
   const MyfloatingButton({
@@ -39,15 +41,21 @@ class MyfloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {},
       backgroundColor: kPurpleColor,
       elevation: 0,
-      child: Icon(Icons.add),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const NewTransactionScreen()),
+        );
+      },
+      child: const Icon(Icons.add),
     );
   }
 }
 
 //!headerwidgets
+// ignore: camel_case_types
 class headerwidget extends StatelessWidget {
   const headerwidget({
     super.key,
@@ -64,7 +72,7 @@ class headerwidget extends StatelessWidget {
         children: [
           Expanded(
             child: SearchBarAnimation(
-              hintText: '...جست و جو کنید',
+              hintText: ('...جست و جو کنید'),
               textEditingController: searchController,
               isOriginalAnimation: false,
               buttonColour: kPurpleColor,
@@ -85,7 +93,7 @@ class headerwidget extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            width: 15,
+            width: 10,
           ),
           const Text(
             ' : تراکنش ها',
@@ -111,10 +119,10 @@ class Picwidget extends StatelessWidget {
           height: 200,
           width: 200,
         ),
-     const   SizedBox(
+        const SizedBox(
           height: 10,
         ),
-    const    Text(':)تراکنشی یوخدی که'),
+        const Text(':)تراکنشی یوخدی که'),
         const Spacer(),
       ],
     );
