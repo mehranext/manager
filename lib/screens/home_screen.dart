@@ -24,11 +24,56 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 headerwidget(searchController: searchController),
-                const Expanded(child: Picwidget()),
+                //const Expanded(child: Picwidget()),
+                MyListTileWidget(),
               ],
             ),
-          )),
+          ),
+          ),
     );
+  }
+}
+
+class MyListTileWidget extends StatelessWidget {
+  const MyListTileWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: kRedColor,
+                borderRadius: BorderRadius.circular(15),
+              ),
+            child: const Center(
+              child: Icon(Icons.add,color: Colors.white,),
+            ),
+            ),
+           const Padding(padding: EdgeInsets.only(left: 15),
+            child: Text('Gym'),
+            ),
+            const Spacer(),
+            const Column(
+              children: [
+                Text('تومان',
+                style: TextStyle(fontSize: 14,color: kRedColor),
+                ),
+              Text('1000',
+              style: TextStyle(fontSize: 14,color: kRedColor),
+              ),
+              Text('1400/01/01')
+              ],
+            ),
+          ],
+        ),
+      );
   }
 }
 

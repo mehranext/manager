@@ -20,18 +20,18 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
+              const Text(
                 'تراکنش جدید',
                 style: TextStyle(fontSize: 18),
               ),
-              MyTextField(
+              const MyTextField(
                 hintText: 'توضیحات',
               ),
-              MyTextField(
+              const MyTextField(
                 hintText: 'مبلغ',
                 type: TextInputType.number,
               ),
-              TypeAndDateWidget(),
+              const TypeAndDateWidget(),
               MyButton(
                 text: 'اضافه کردن',
                 onPressed: (){},
