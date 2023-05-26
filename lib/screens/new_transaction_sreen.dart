@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:manager/models/constant.dart';
+import 'package:manager/models/money.dart';
+import 'package:manager/screens/home_screen.dart';
 
 class NewTransactionScreen extends StatefulWidget {
   const NewTransactionScreen({super.key});
+  static int groupId = 0;
 
   @override
   State<NewTransactionScreen> createState() => _NewTransactionScreenState();
@@ -34,7 +37,16 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
               const TypeAndDateWidget(),
               MyButton(
                 text: 'اضافه کردن',
-                onPressed: (){},
+                onPressed: () {
+                  HomeScreen.moneys.add(
+                    Money(
+                        id: 1000,
+                        title: '1000',
+                        price: '1000',
+                        date: '1000',
+                        isReceived: true),
+                  );
+                },
               ),
             ],
           ),
@@ -44,10 +56,11 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
   }
 }
 
+//! MyButton
 class MyButton extends StatelessWidget {
   final String text;
   final Function() onPressed;
-  const MyButton({super.key, required this.text,required this.onPressed});
+  const MyButton({super.key, required this.text, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -57,17 +70,24 @@ class MyButton extends StatelessWidget {
           style:
               TextButton.styleFrom(backgroundColor: kPurpleColor, elevation: 0),
           onPressed: onPressed,
-          child: Text(text,),
+          child: Text(
+            text,
+          ),
         ));
   }
 }
 
 //!Type And Date Widget
-class TypeAndDateWidget extends StatelessWidget {
+class TypeAndDateWidget extends StatefulWidget {
   const TypeAndDateWidget({
     super.key,
   });
 
+  @override
+  State<TypeAndDateWidget> createState() => _TypeAndDateWidgetState();
+}
+
+class _TypeAndDateWidgetState extends State<TypeAndDateWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -75,14 +95,22 @@ class TypeAndDateWidget extends StatelessWidget {
       children: [
         MyRadioButton(
           value: 1,
-          groupValue: 1000,
-          onChanged: (value) {},
+          groupValue: NewTransactionScreen.groupId,
+          onChanged: (value) {
+            setState(() {
+              NewTransactionScreen.groupId = value!;
+            });
+          },
           text: 'دریافتی',
         ),
         MyRadioButton(
-          value: 0,
-          groupValue: 1000,
-          onChanged: (value) {},
+          value: 2,
+          groupValue: NewTransactionScreen.groupId,
+          onChanged: (value) {
+            setState(() {
+              NewTransactionScreen.groupId = value!;
+            });
+          },
           text: 'پرداختی',
         ),
         OutlinedButton(
@@ -117,6 +145,7 @@ class MyRadioButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Radio(
+          activeColor: kPurpleColor,
           value: value,
           groupValue: groupValue,
           onChanged: onChanged,
