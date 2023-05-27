@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        floatingActionButton: const MyfloatingButton(),
+        floatingActionButton: FabWidget(),
         body: SizedBox(
           width: double.infinity,
           child: Column(
@@ -49,16 +49,75 @@ class _HomeScreenState extends State<HomeScreen> {
               headerwidget(searchController: searchController),
               //const Expanded(child: Picwidget()),
               Expanded(
-                child: ListView.builder(
-                    itemCount: HomeScreen.moneys.length,
-                    itemBuilder: (context, index) {
-                      return MyListTileWidget(index: index);
-                    }),
+                child: HomeScreen.moneys.isEmpty
+                    ? Picwidget()
+                    : ListView.builder(
+                        itemCount: HomeScreen.moneys.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              onLongPress: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    actionsAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    title: const Text(
+                                      'آیا مطمعن هستید از حذف آیتم؟',
+                                      style: TextStyle(
+                                          fontSize: 15, color: kRedColor),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          'خیر',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            HomeScreen.moneys.removeAt(index);
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          'بله',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              child: MyListTileWidget(index: index));
+                        }),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget FabWidget() {
+    return FloatingActionButton(
+      backgroundColor: kPurpleColor,
+      elevation: 0,
+      onPressed: () {
+        NewTransactionScreen.decriptionController.text = '';
+        NewTransactionScreen.priceController.text = '';
+        NewTransactionScreen.groupId = 0;
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const NewTransactionScreen()),
+        ).then((value) {
+          setState(() {});
+        });
+      },
+      child: const Icon(Icons.add),
     );
   }
 }
@@ -108,28 +167,6 @@ class MyListTileWidget extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-//!floatingbutton
-class MyfloatingButton extends StatelessWidget {
-  const MyfloatingButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: kPurpleColor,
-      elevation: 0,
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const NewTransactionScreen()),
-        );
-      },
-      child: const Icon(Icons.add),
     );
   }
 }

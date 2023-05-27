@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:manager/models/constant.dart';
 import 'package:manager/models/money.dart';
@@ -6,7 +8,8 @@ import 'package:manager/screens/home_screen.dart';
 class NewTransactionScreen extends StatefulWidget {
   const NewTransactionScreen({super.key});
   static int groupId = 0;
-
+  static TextEditingController decriptionController = TextEditingController();
+  static TextEditingController priceController = TextEditingController();
   @override
   State<NewTransactionScreen> createState() => _NewTransactionScreenState();
 }
@@ -23,29 +26,34 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text(
+              Text(
                 'تراکنش جدید',
                 style: TextStyle(fontSize: 18),
               ),
-              const MyTextField(
+              MyTextField(
                 hintText: 'توضیحات',
+                controller: NewTransactionScreen.decriptionController,
               ),
-              const MyTextField(
+              MyTextField(
                 hintText: 'مبلغ',
                 type: TextInputType.number,
+                controller: NewTransactionScreen.priceController,
               ),
-              const TypeAndDateWidget(),
+              TypeAndDateWidget(),
               MyButton(
                 text: 'اضافه کردن',
                 onPressed: () {
                   HomeScreen.moneys.add(
                     Money(
-                        id: 1000,
-                        title: '1000',
-                        price: '1000',
-                        date: '1000',
-                        isReceived: true),
+                      id: Random().nextInt(9999),
+                      title: NewTransactionScreen.decriptionController.text,
+                      price: NewTransactionScreen.priceController.text,
+                      date: '1402/03/06',
+                      isReceived:
+                          NewTransactionScreen.groupId == 1 ? true : false,
+                    ),
                   );
+                  Navigator.pop(context);
                 },
               ),
             ],
@@ -160,11 +168,16 @@ class MyRadioButton extends StatelessWidget {
 class MyTextField extends StatelessWidget {
   final String hintText;
   final TextInputType type;
+  final TextEditingController controller;
   const MyTextField(
-      {super.key, required this.hintText, this.type = TextInputType.text});
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      this.type = TextInputType.text});
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       keyboardType: type,
       cursorColor: Colors.black54,
       decoration: InputDecoration(
