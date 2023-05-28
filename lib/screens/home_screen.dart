@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
 import 'package:manager/main.dart';
 import 'package:manager/models/constant.dart';
 import 'package:manager/models/money.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController searchController = TextEditingController();
+  Box<Money> hiveBox = Hive.box<Money>('moneyBox');
 
   @override
   void initState() {
@@ -37,10 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
               headerwidget(searchController: searchController),
               //const Expanded(child: Picwidget()),
               Expanded(
-                child: HomeScreen.moneys.isEmpty
+                child: hiveBox.values.isEmpty
                     ? const Picwidget()
                     : ListView.builder(
-                        itemCount: HomeScreen.moneys.length,
+                        itemCount: hiveBox.values.length,
                         itemBuilder: (context, index) {
                           //!Delete
                           return GestureDetector(
@@ -65,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         const NewTransactionScreen(),
                                   ),
                                 ).then((value) {
+                                  Manage.getdata();
                                   setState(() {});
                                 });
                               },
@@ -91,9 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       TextButton(
                                         onPressed: () {
-                                          setState(() {
-                                            HomeScreen.moneys.removeAt(index);
-                                          });
+                                          hiveBox.deleteAt(index);
+                                          Manage.getdata();
+                                          setState(() {});
                                           Navigator.pop(context);
                                         },
                                         child: const Text(
