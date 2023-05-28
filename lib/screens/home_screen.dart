@@ -50,11 +50,30 @@ class _HomeScreenState extends State<HomeScreen> {
               //const Expanded(child: Picwidget()),
               Expanded(
                 child: HomeScreen.moneys.isEmpty
-                    ? Picwidget()
+                    ? const Picwidget()
                     : ListView.builder(
                         itemCount: HomeScreen.moneys.length,
                         itemBuilder: (context, index) {
+                          //!Delete
                           return GestureDetector(
+                              //*Edit
+                              onTap: () {
+                                NewTransactionScreen.decriptionController.text =
+                                    HomeScreen.moneys[index].title;
+                                //
+                                NewTransactionScreen.priceController.text =
+                                    HomeScreen.moneys[index].price;
+                                //
+                                NewTransactionScreen.groupId =
+                                    HomeScreen.moneys[index].isReceived ? 1 : 2;
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const NewTransactionScreen(),
+                                  ),
+                                );
+                              },
                               onLongPress: () {
                                 showDialog(
                                   context: context,
@@ -102,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget FabWidget() {
     return FloatingActionButton(
       backgroundColor: kPurpleColor,

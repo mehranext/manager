@@ -26,7 +26,7 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
+              const Text(
                 'تراکنش جدید',
                 style: TextStyle(fontSize: 18),
               ),
@@ -39,7 +39,7 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                 type: TextInputType.number,
                 controller: NewTransactionScreen.priceController,
               ),
-              TypeAndDateWidget(),
+              const TypeAndDateWidget(),
               MyButton(
                 text: 'اضافه کردن',
                 onPressed: () {
