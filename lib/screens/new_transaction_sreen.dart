@@ -63,7 +63,8 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                   if (NewTransactionScreen.isEditing) {
                     HomeScreen.moneys[NewTransactionScreen.index] = item;
                   } else {
-                    HomeScreen.moneys.add(item);
+                    //HomeScreen.moneys.add(item);
+                    hiveBox.add(item);
                   }
                   Navigator.pop(context);
                 },

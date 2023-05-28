@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:manager/main.dart';
 import 'package:manager/models/constant.dart';
 import 'package:manager/models/money.dart';
 import 'package:manager/screens/new_transaction_sreen.dart';
@@ -16,6 +17,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Manage.getdata();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
           context,
           MaterialPageRoute(builder: (context) => const NewTransactionScreen()),
         ).then((value) {
+          Manage.getdata();
           setState(() {});
         });
       },
