@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:manager/models/constant.dart';
 import 'package:manager/models/money.dart';
 import 'package:manager/screens/home_screen.dart';
@@ -17,6 +18,7 @@ class NewTransactionScreen extends StatefulWidget {
 }
 
 class _NewTransactionScreenState extends State<NewTransactionScreen> {
+  Box<Money> hiveBox = Hive.box<Money>('moneyBox');
   @override
   Widget build(BuildContext context) {
     return SafeArea(
