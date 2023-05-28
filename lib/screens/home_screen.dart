@@ -8,26 +8,7 @@ import 'package:searchbar_animation/searchbar_animation.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  static List<Money> moneys = [
-    Money(
-        id: 0,
-        title: 'Tes1',
-        price: '1000',
-        date: '1400/01/01',
-        isReceived: true),
-    Money(
-        id: 1,
-        title: 'Test2',
-        price: '2000',
-        date: '1400/01/01',
-        isReceived: false),
-    Money(
-        id: 2,
-        title: 'Test3',
-        price: '3000',
-        date: '1400/01/01',
-        isReceived: false),
-  ];
+  static List<Money> moneys = [];
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -270,7 +251,7 @@ class Picwidget extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        const Text(':)تراکنشی یوخدی که'),
+        const Text(':)تراکنشی موجود نیست'),
         const Spacer(),
       ],
     );
