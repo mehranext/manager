@@ -10,6 +10,8 @@ class NewTransactionScreen extends StatefulWidget {
   static int groupId = 0;
   static TextEditingController decriptionController = TextEditingController();
   static TextEditingController priceController = TextEditingController();
+  static bool isEditing = false;
+  static int index = 0;
   @override
   State<NewTransactionScreen> createState() => _NewTransactionScreenState();
 }
@@ -26,8 +28,10 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text(
-                'تراکنش جدید',
+              Text(
+                NewTransactionScreen.isEditing
+                    ? 'ویرایش تراکنش'
+                    : 'تراکنش جدید',
                 style: TextStyle(fontSize: 18),
               ),
               MyTextField(
@@ -41,18 +45,24 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
               ),
               const TypeAndDateWidget(),
               MyButton(
-                text: 'اضافه کردن',
+                text: NewTransactionScreen.isEditing
+                    ? 'ویرایش کردن'
+                    : 'اضافه کردن',
                 onPressed: () {
-                  HomeScreen.moneys.add(
-                    Money(
-                      id: Random().nextInt(9999),
-                      title: NewTransactionScreen.decriptionController.text,
-                      price: NewTransactionScreen.priceController.text,
-                      date: '1402/03/06',
-                      isReceived:
-                          NewTransactionScreen.groupId == 1 ? true : false,
-                    ),
+                  Money item = Money(
+                    id: Random().nextInt(9999),
+                    title: NewTransactionScreen.decriptionController.text,
+                    price: NewTransactionScreen.priceController.text,
+                    date: '1402/03/06',
+                    isReceived:
+                        NewTransactionScreen.groupId == 1 ? true : false,
                   );
+                  //
+                  if (NewTransactionScreen.isEditing) {
+                    HomeScreen.moneys[NewTransactionScreen.index] = item;
+                  } else {
+                    HomeScreen.moneys.add(item);
+                  }
                   Navigator.pop(context);
                 },
               ),

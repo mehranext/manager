@@ -66,13 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                 //
                                 NewTransactionScreen.groupId =
                                     HomeScreen.moneys[index].isReceived ? 1 : 2;
+                                //
+                                NewTransactionScreen.isEditing = true;
+                                //
+                                NewTransactionScreen.index = index;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         const NewTransactionScreen(),
                                   ),
-                                );
+                                ).then((value) {
+                                  setState(() {});
+                                });
                               },
                               onLongPress: () {
                                 showDialog(
@@ -128,8 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
       elevation: 0,
       onPressed: () {
         NewTransactionScreen.decriptionController.text = '';
+        //
         NewTransactionScreen.priceController.text = '';
+        //
         NewTransactionScreen.groupId = 0;
+        //
+        NewTransactionScreen.isEditing = false;
+        //
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const NewTransactionScreen()),
