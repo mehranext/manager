@@ -6,6 +6,7 @@ import 'package:manager/main.dart';
 import 'package:manager/models/constant.dart';
 import 'package:manager/models/money.dart';
 import 'package:manager/screens/home_screen.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class NewTransactionScreen extends StatefulWidget {
   const NewTransactionScreen({super.key});
@@ -14,6 +15,7 @@ class NewTransactionScreen extends StatefulWidget {
   static TextEditingController priceController = TextEditingController();
   static bool isEditing = false;
   static int id = 0;
+  static String date = 'تاریخ';
   @override
   State<NewTransactionScreen> createState() => _NewTransactionScreenState();
 }
@@ -36,7 +38,7 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                 NewTransactionScreen.isEditing
                     ? 'ویرایش تراکنش'
                     : 'تراکنش جدید',
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
               MyTextField(
                 hintText: 'توضیحات',
@@ -57,7 +59,7 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                     id: Random().nextInt(99999999),
                     title: NewTransactionScreen.decriptionController.text,
                     price: NewTransactionScreen.priceController.text,
-                    date: '1402/03/06',
+                    date: NewTransactionScreen.date,
                     isReceived:
                         NewTransactionScreen.groupId == 1 ? true : false,
                   );
@@ -66,7 +68,6 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                     int index = 0;
                     Manage.getdata();
                     for (int i = 0; i < hiveBox.values.length; i++) {
-                    
                       if (hiveBox.values.elementAt(i).id ==
                           NewTransactionScreen.id) {
                         index = i;
@@ -125,31 +126,63 @@ class _TypeAndDateWidgetState extends State<TypeAndDateWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        MyRadioButton(
-          value: 1,
-          groupValue: NewTransactionScreen.groupId,
-          onChanged: (value) {
-            setState(() {
-              NewTransactionScreen.groupId = value!;
-            });
-          },
-          text: 'دریافتی',
+        Expanded(
+          child: MyRadioButton(
+            value: 1,
+            groupValue: NewTransactionScreen.groupId,
+            onChanged: (value) {
+              setState(() {
+                NewTransactionScreen.groupId = value!;
+              });
+            },
+            text: 'دریافتی',
+          ),
         ),
-        MyRadioButton(
-          value: 2,
-          groupValue: NewTransactionScreen.groupId,
-          onChanged: (value) {
-            setState(() {
-              NewTransactionScreen.groupId = value!;
-            });
-          },
-          text: 'پرداختی',
+        Expanded(
+          child: MyRadioButton(
+            value: 2,
+            groupValue: NewTransactionScreen.groupId,
+            onChanged: (value) {
+              setState(() {
+                NewTransactionScreen.groupId = value!;
+              });
+            },
+            text: 'پرداختی',
+          ),
+        ),
+        const SizedBox(
+          width: 10,
         ),
         OutlinedButton(
-          onPressed: () {},
-          child: const Text(
-            'تاریخ',
-            style: TextStyle(color: Colors.black),
+          onPressed: () async {
+            var pickDate = await showPersianDatePicker(
+              context: context,
+              initialDate: Jalali.now(),
+              firstDate: Jalali(1400),
+              lastDate: Jalali(1499),
+            );
+            setState(() {
+              String year = pickDate!.year.toString();
+              //!قسمت تغییر تاریخ برای ثبت 01 اعداد ا تا 9
+              String month = pickDate.month.toString().length == 1
+                  ? '0${pickDate.month.toString()}'
+                  : pickDate.month.toString();
+
+              //! تغییر برای اعداد روز 1 تا که 01 داشته باشند
+              String day = pickDate.day.toString();
+              pickDate.year.toString().length == 1
+                  ? '0${pickDate.day.toString()}'
+                  : pickDate.day.toString();
+              //
+              NewTransactionScreen.date = '$year/$month/$day';
+            });
+          },
+          child: Text(
+            NewTransactionScreen.date,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 12,
+            ),
           ),
         ),
       ],
@@ -176,11 +209,13 @@ class MyRadioButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Radio(
-          activeColor: kPurpleColor,
-          value: value,
-          groupValue: groupValue,
-          onChanged: onChanged,
+        Expanded(
+          child: Radio(
+            activeColor: kPurpleColor,
+            value: value,
+            groupValue: groupValue,
+            onChanged: onChanged,
+          ),
         ),
         Text(text),
       ],

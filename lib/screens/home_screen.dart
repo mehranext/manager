@@ -48,6 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           return GestureDetector(
                               //*Edit
                               onTap: () {
+                                //
+                                NewTransactionScreen.date =
+                                    HomeScreen.moneys[index].date;
+                                //
                                 NewTransactionScreen.decriptionController.text =
                                     HomeScreen.moneys[index].title;
                                 //
@@ -59,7 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 //
                                 NewTransactionScreen.isEditing = true;
                                 //
-                                NewTransactionScreen.id = HomeScreen.moneys[index].id;
+                                NewTransactionScreen.id =
+                                    HomeScreen.moneys[index].id;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -120,11 +125,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ignore: non_constant_identifier_names
   //!FAB Widget
+  // ignore: non_constant_identifier_names
   Widget FabWidget() {
     return FloatingActionButton(
       backgroundColor: kPurpleColor,
       elevation: 0,
       onPressed: () {
+        NewTransactionScreen.date = '';
         NewTransactionScreen.decriptionController.text = '';
         //
         NewTransactionScreen.priceController.text = '';
