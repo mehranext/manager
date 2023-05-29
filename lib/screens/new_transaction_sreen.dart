@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:manager/main.dart';
 import 'package:manager/models/constant.dart';
 import 'package:manager/models/money.dart';
 import 'package:manager/screens/home_screen.dart';
@@ -12,13 +13,14 @@ class NewTransactionScreen extends StatefulWidget {
   static TextEditingController decriptionController = TextEditingController();
   static TextEditingController priceController = TextEditingController();
   static bool isEditing = false;
-  static int index = 0;
+  static int id = 0;
   @override
   State<NewTransactionScreen> createState() => _NewTransactionScreenState();
 }
 
 class _NewTransactionScreenState extends State<NewTransactionScreen> {
   Box<Money> hiveBox = Hive.box<Money>('moneyBox');
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,7 +54,7 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                     : 'اضافه کردن',
                 onPressed: () {
                   Money item = Money(
-                    id: Random().nextInt(9999),
+                    id: Random().nextInt(99999999),
                     title: NewTransactionScreen.decriptionController.text,
                     price: NewTransactionScreen.priceController.text,
                     date: '1402/03/06',
@@ -61,10 +63,18 @@ class _NewTransactionScreenState extends State<NewTransactionScreen> {
                   );
                   //
                   if (NewTransactionScreen.isEditing) {
-                    //HomeScreen.moneys[NewTransactionScreen.index] = item;
-                    hiveBox.putAt(NewTransactionScreen.index, item);
+                    int index = 0;
+                    Manage.getdata();
+                    for (int i = 0; i < hiveBox.values.length; i++) {
+                    
+                      if (hiveBox.values.elementAt(i).id ==
+                          NewTransactionScreen.id) {
+                        index = i;
+                      }
+                    }
+
+                    hiveBox.putAt(index, item);
                   } else {
-                    //HomeScreen.moneys.add(item);
                     hiveBox.add(item);
                   }
                   Navigator.pop(context);

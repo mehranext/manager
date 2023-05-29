@@ -36,13 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
           width: double.infinity,
           child: Column(
             children: [
-              headerwidget(searchController: searchController),
+              headerWidget(),
               //const Expanded(child: Picwidget()),
               Expanded(
-                child: hiveBox.values.isEmpty
+                child: HomeScreen.moneys.isEmpty
                     ? const Picwidget()
                     : ListView.builder(
-                        itemCount: hiveBox.values.length,
+                        itemCount: HomeScreen.moneys.length,
                         itemBuilder: (context, index) {
                           //!Delete
                           return GestureDetector(
@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 //
                                 NewTransactionScreen.isEditing = true;
                                 //
-                                NewTransactionScreen.index = index;
+                                NewTransactionScreen.id = HomeScreen.moneys[index].id;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -119,6 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // ignore: non_constant_identifier_names
+  //!FAB Widget
   Widget FabWidget() {
     return FloatingActionButton(
       backgroundColor: kPurpleColor,
@@ -143,8 +144,68 @@ class _HomeScreenState extends State<HomeScreen> {
       child: const Icon(Icons.add),
     );
   }
+
+  //!HeaderWidget
+  Widget headerWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20, top: 20, left: 5),
+      child: Row(
+        children: [
+          Expanded(
+            child: SearchBarAnimation(
+              hintText: ('...جست و جو کنید'),
+              textEditingController: searchController,
+              isOriginalAnimation: false,
+              buttonColour: kPurpleColor,
+              buttonElevation: 0,
+              onCollapseComplete: () {
+                Manage.getdata();
+                searchController.text = '';
+                setState(() {});
+              },
+              buttonBorderColour: Colors.black54,
+              trailingWidget: const Icon(
+                Icons.search,
+                size: 25,
+              ),
+              buttonWidget: const Icon(
+                Icons.search,
+                size: 25,
+              ),
+              secondaryButtonWidget: const Icon(
+                Icons.search,
+              ),
+              onFieldSubmitted: (String text) {
+                List<Money> result = hiveBox.values
+                    .where(
+                      (value) =>
+                          value.title.contains(text) ||
+                          value.date.contains(text),
+                    )
+                    .toList();
+                HomeScreen.moneys.clear();
+                setState(() {
+                  for (var value in result) {
+                    HomeScreen.moneys.add(value);
+                  }
+                });
+              },
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          const Text(
+            ' : تراکنش ها',
+            style: TextStyle(fontSize: 28),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
+//!MyListTile
 class MyListTileWidget extends StatelessWidget {
   final int index;
   const MyListTileWidget({super.key, required this.index});
@@ -187,57 +248,6 @@ class MyListTileWidget extends StatelessWidget {
               ),
               Text(HomeScreen.moneys[index].date),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-//!headerwidgets
-// ignore: camel_case_types
-class headerwidget extends StatelessWidget {
-  const headerwidget({
-    super.key,
-    required this.searchController,
-  });
-
-  final TextEditingController searchController;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20, top: 20, left: 5),
-      child: Row(
-        children: [
-          Expanded(
-            child: SearchBarAnimation(
-              hintText: ('...جست و جو کنید'),
-              textEditingController: searchController,
-              isOriginalAnimation: false,
-              buttonColour: kPurpleColor,
-              buttonElevation: 0,
-              buttonBorderColour: Colors.black54,
-              trailingWidget: const Icon(
-                Icons.search,
-                size: 25,
-              ),
-              buttonWidget: const Icon(
-                Icons.search,
-                size: 25,
-              ),
-              secondaryButtonWidget: const Icon(
-                Icons.search,
-              ),
-              onFieldSubmitted: (String text) {},
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          const Text(
-            ' : تراکنش ها',
-            style: TextStyle(fontSize: 28),
           ),
         ],
       ),
