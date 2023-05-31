@@ -1,5 +1,4 @@
 // ignore: file_names
-// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:manager/utils/calculate.dart';
 import 'package:manager/widgets/chart_widget.dart';
