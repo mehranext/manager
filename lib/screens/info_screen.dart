@@ -1,4 +1,9 @@
+// ignore: file_names
+// ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:manager/utils/calculate.dart';
+import 'package:manager/widgets/chart_widget.dart';
+
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key});
@@ -10,40 +15,44 @@ class InfoScreen extends StatefulWidget {
 class _InfoScreenState extends State<InfoScreen> {
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
         child: Scaffold(
             body: SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(right: 15, top: 15, left: 5),
             child: Text('مدیریت تراکنش ها'),
           ),
           MoneyInfowidget(
             firstText: ': دریافتی امروز',
+            firstPrice: Calculate.dToday().toString(),
             secondText: ': پرداختی امروز',
-            firstPrice: '0',
-            secodPrice: '0',
+            secodPrice: Calculate.pToday().toString(),
           ),
           MoneyInfowidget(
-            firstText: ': دریافتی امروز',
-            secondText: ': پرداختی امروز',
-            firstPrice: '0',
-            secodPrice: '0',
+            firstText: ': دریافتی ماه',
+            firstPrice: Calculate.dMonth().toString(),
+            secondText: ': پرداختی ماه',
+            secodPrice: Calculate.pMonth().toString(),
           ),
           MoneyInfowidget(
-            firstText: ': دریافتی امروز',
-            secondText: ': پرداختی امروز',
-            firstPrice: '0',
-            secodPrice: '0',
+            firstText: ': دریافتی امسال',
+            firstPrice: Calculate.dYear().toString(),
+            secondText: ': پرداختی امسال',
+            secodPrice: Calculate.pYear().toString(),
           ),
+          Container(
+              padding: const EdgeInsets.all(20),
+              height: 200,)
         ],
       ),
     )));
   }
 }
+
 //! moneyinformationwidget
 class MoneyInfowidget extends StatelessWidget {
   final String firstText;

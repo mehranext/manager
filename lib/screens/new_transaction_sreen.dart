@@ -5,7 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:manager/main.dart';
 import 'package:manager/models/constant.dart';
 import 'package:manager/models/money.dart';
-import 'package:manager/screens/home_screen.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 class NewTransactionScreen extends StatefulWidget {
@@ -170,11 +169,11 @@ class _TypeAndDateWidgetState extends State<TypeAndDateWidget> {
 
               //! تغییر برای اعداد روز 1 تا که 01 داشته باشند
               String day = pickDate.day.toString();
-              pickDate.year.toString().length == 1
+              pickDate.day.toString().length == 1
                   ? '0${pickDate.day.toString()}'
                   : pickDate.day.toString();
               //
-              NewTransactionScreen.date = '$year/$month/$day';
+              NewTransactionScreen.date = year + '/' + month + '/' + day;
             });
           },
           child: Text(

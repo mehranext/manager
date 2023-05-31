@@ -42,7 +42,9 @@ dependencies:
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.0
   persian_datetime_picker: ^2.6.0
+  ir_datetime_picker: ^3.0.3
   fl_chart: ^0.62.0
+  dartx: ^1.1.0
 
 dev_dependencies:
   flutter_test:
